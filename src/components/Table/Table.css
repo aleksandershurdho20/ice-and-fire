@@ -18,6 +18,9 @@
   align-items: center;
   justify-content: space-between;
 }
+.table-items:hover {
+  background: #fbfbfb;
+}
 .allegiance-link {
   color: inherit;
   text-decoration: none;
