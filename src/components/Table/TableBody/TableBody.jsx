@@ -14,17 +14,19 @@ export default function TableBody({ characters }) {
   const classes = useStyles();
   const history = useHistory();
 
-  const redirectToAllegianceHouse = async (url) => {
+  const redirectToAllegianceHouse = async (character, url) => {
     const { data } = await API.getHouseFromAllegiances(url);
-    history.push({
-      pathname: "/houses",
-      state: data,
-    });
+    if (character?.allegiances.length !== 0) {
+      history.push({
+        pathname: "/houses",
+        state: data,
+      });
+    }
   };
   return (
     <div className={classes.root}>
       <Grid container className="table-body-wrapper">
-        {characters.length > 0
+        {characters?.length > 0
           ? characters.map((character, index) => (
               <Grid container className="table-items" key={index}>
                 <Grid item lg={3}>
@@ -40,9 +42,13 @@ export default function TableBody({ characters }) {
                   {!character?.culture ? "Unknown" : character?.culture}
                 </Grid>
                 <Grid item lg={2}>
+                  {}
                   <a
                     onClick={() => {
-                      redirectToAllegianceHouse(character?.allegiances);
+                      redirectToAllegianceHouse(
+                        character,
+                        character?.allegiances
+                      );
                     }}
                     className="allegiance-link"
                   >
@@ -50,7 +56,10 @@ export default function TableBody({ characters }) {
                       ? "No Allegancies"
                       : character?.allegiances
                           ?.toString()
-                          ?.split("/houses/")[1]}
+                          ?.split(
+                            "https://www.anapioficeandfire.com/api/houses/"
+                          )
+                          .map((data) => data)}
                   </a>
                 </Grid>
               </Grid>
