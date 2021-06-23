@@ -3,6 +3,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { IsAlive } from "../../../helpers/IsAlive";
+import { useHistory } from "react-router-dom";
+import * as API from "../../../utils/api";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -10,7 +12,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function TableBody({ characters }) {
   const classes = useStyles();
-  console.log(characters, "charactersData");
+  const history = useHistory();
+
+  const redirectToAllegianceHouse = async (url) => {
+    const { data } = await API.getHouseFromAllegiances(url);
+    history.push({
+      pathname: "/houses",
+      state: data,
+    });
+  };
   return (
     <div className={classes.root}>
       <Grid container className="table-body-wrapper">
@@ -30,7 +40,12 @@ export default function TableBody({ characters }) {
                   {!character?.culture ? "Unknown" : character?.culture}
                 </Grid>
                 <Grid item lg={2}>
-                  <a href={character?.allegiances} className="allegiance-link">
+                  <a
+                    onClick={() => {
+                      redirectToAllegianceHouse(character?.allegiances);
+                    }}
+                    className="allegiance-link"
+                  >
                     {character?.allegiances.length == 0
                       ? "No Allegancies"
                       : character?.allegiances
