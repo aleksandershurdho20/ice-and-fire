@@ -25,7 +25,6 @@ export default function Characters() {
   };
   const handlePaginationChange = (page, pageSize) => {
     API.getCharacterPageByPagination(page, pageSize).then((res) => {
-      console.log(res.data, "dskldskldkl");
       setCharacterData(res.data);
       setData(res.data);
     });
@@ -39,7 +38,10 @@ export default function Characters() {
           onChange={handleFilterChange}
           placeholder="Search by culture"
         />
-        <Pagination handlePaginationChange={handlePaginationChange} />
+        <Pagination
+          handlePaginationChange={handlePaginationChange}
+          characters={data}
+        />
         <Table characters={data} />
       </Grid>
     </Grid>

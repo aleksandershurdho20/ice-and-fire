@@ -14,8 +14,8 @@ export default function TableBody({ characters }) {
   const classes = useStyles();
   const history = useHistory();
 
-  const redirectToAllegianceHouse = async (character, url) => {
-    const { data } = await API.getHouseFromAllegiances(url);
+  const redirectToAllegianceHouse = async (character, id) => {
+    const { data } = await API.getHouseFromAllegiances(id);
     if (character?.allegiances.length !== 0) {
       history.push({
         pathname: "/houses",
@@ -30,8 +30,11 @@ export default function TableBody({ characters }) {
           ? characters.map((character, index) => (
               <Grid container className="table-items" key={index}>
                 <Grid item lg={3}>
-                  {character?.name + "," + character?.aliases[0]}
+                  {character?.name +
+                    "," +
+                    character?.aliases.map((alias) => alias)}
                 </Grid>
+
                 <Grid item lg={3}>
                   {IsAlive(character)}
                 </Grid>
@@ -43,7 +46,7 @@ export default function TableBody({ characters }) {
                 </Grid>
                 <Grid item lg={2}>
                   {}
-                  <a
+                  {/* <a
                     onClick={() => {
                       redirectToAllegianceHouse(
                         character,
@@ -51,16 +54,23 @@ export default function TableBody({ characters }) {
                       );
                     }}
                     className="allegiance-link"
-                  >
-                    {character?.allegiances.length == 0
-                      ? "No Allegancies"
-                      : character?.allegiances
-                          ?.toString()
-                          ?.split(
-                            "https://www.anapioficeandfire.com/api/houses/"
-                          )
-                          .map((data) => data)}
-                  </a>
+                  > */}
+                  {character?.allegiances.length == 0
+                    ? "No Allegancies"
+                    : character?.allegiances
+                        ?.toString()
+                        ?.split("https://www.anapioficeandfire.com/api/houses/")
+                        .map((data) => (
+                          <a
+                            className="allegiance-link"
+                            onClick={() => {
+                              redirectToAllegianceHouse(character, data);
+                            }}
+                          >
+                            {data}
+                          </a>
+                        ))}
+                  {/* </a> */}
                 </Grid>
               </Grid>
             ))

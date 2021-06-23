@@ -4,3 +4,6 @@ body {
   background: #fbfbfb;
   font-family: "Hind Siliguri", sans-serif;
 }
+.MuiPagination-root {
+  width: 73%;
+}
