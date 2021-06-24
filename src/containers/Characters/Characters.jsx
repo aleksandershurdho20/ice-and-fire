@@ -4,16 +4,15 @@ import Table from "../../components/Table";
 import Grid from "@material-ui/core/Grid";
 import TextInput from "../../components/FilterInput";
 import Pagination from "../../components/Pagination";
+import Loader from "../../components/Loader";
+import FilterDropDown from "../../components/FilterDropDown/FilterDropDown";
+import parse from  'parse-link-header'
 export default function Characters() {
   const [charactersData, setCharacterData] = useState([]);
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
-  // useEffect(() => {
-  //   API.getCharacterPage().then((res) => {
-  //     setCharacterData(res.data);
-  //     setData(res.data);
-  //   });
-  // }, []);
+  const [open, setOpen] = useState(false);
+  const[countApiPage,setCountApiPage]=useState(null)
   const handleFilterChange = (e) => {
     setQuery(e.target.value);
     if (e.target.value.length !== 0) {
@@ -24,25 +23,47 @@ export default function Characters() {
     setData(filteredCharacters);
   };
   const handlePaginationChange = (page, pageSize) => {
+    setOpen(true);
     API.getCharacterPageByPagination(page, pageSize).then((res) => {
+    
       setCharacterData(res.data);
       setData(res.data);
+      setOpen(false);
+       
+
     });
+  };
+  
+  const handleFilterByDropDownOptions = (value) => {
+    const filteredCharacters =
+      value === "any"
+        ? [...charactersData]
+        : charactersData.filter((character) =>
+          character.gender.includes(value)
+        );
+    setData(filteredCharacters);
   };
   return (
     <Grid container justify="center">
       <Grid item lg={10}>
-        <TextInput
-          type="text"
-          value={query}
-          onChange={handleFilterChange}
-          placeholder="Search by culture"
-        />
+        <div className="filter-wrappers">
+          <TextInput
+            type="text"
+            value={query}
+            onChange={handleFilterChange}
+            placeholder="Search by culture"
+          />
+          <FilterDropDown
+            handleFilterByDropDownOptions={handleFilterByDropDownOptions}
+          />
+        </div>
         <Pagination
           handlePaginationChange={handlePaginationChange}
           characters={data}
+          countApiPage={countApiPage}
         />
         <Table characters={data} />
+        <Loader open={open} />
       </Grid>
     </Grid>
   );

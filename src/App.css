@@ -7,3 +7,11 @@ body {
 .MuiPagination-root {
   width: 73%;
 }
+.filter-wrappers{
+  display: flex;
+  justify-content: space-around;
+  margin: 10px auto;
+}
+#root > div > div > div > div.MuiTablePagination-root > div > p:nth-child(4){
+  display: none;
+}

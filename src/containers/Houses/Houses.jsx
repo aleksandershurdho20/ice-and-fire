@@ -1,46 +1,16 @@
 import React from "react";
 import { Button, Grid, TextField, Paper, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3, 2),
-    margin: theme.spacing(4),
-  },
-  inputs: {
-    marginTop: theme.spacing(1),
-    background: "#fbfbfb",
-    "& .MuiFilledInput-input": {
-      background: "#fbfbfb",
-    },
-  },
-  titleWrapper: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  mainTitle: {
-    margin: theme.spacing(2, "auto"),
-  },
-  titleContent: {
-    background: "#fbfbfb",
-    padding: 10,
-    borderRadius: 8,
-    width: 200,
-    marginBottom: 8,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
+import{useStyles} from '../../utils/useStyles'
+
 export default function Houses(props) {
   const { state } = props?.location;
   const classes = useStyles();
-  console.log(state);
   return (
     <Paper className={classes.root}>
       <Button onClick={() => props.history.goBack()} className={classes.button}>
         Go Back
       </Button>
-      <Grid container spacing={24} justify="center" alignItems="center ">
+      <Grid container  justify="center" >
         <Grid item md={4}>
           <TextField
             value={state.name}
@@ -116,7 +86,7 @@ export default function Houses(props) {
           </div>
         </Grid>
       </Grid>
-      <Grid container spacing={24} justify="center" alignItems="center ">
+      <Grid container justify="center">
         <Grid item md={4}>
           <TextField
             value={state.diedOut}

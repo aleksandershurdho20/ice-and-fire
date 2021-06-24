@@ -4,7 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 
 export default function PaginationComponent({
   handlePaginationChange,
-  characters,
+  countApiPage
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
@@ -20,12 +20,12 @@ export default function PaginationComponent({
       count={100}
       page={page}
       rowsPerPage={rowsPerPage}
+      onChangePage={()=>{}}
       onChangeRowsPerPage={handleChangeRowsPerPage}
-      showFirstButton={true}
-      showLastButton={true}
+      rowsPerPageOptions={[10,25,50]}
       ActionsComponent={() => (
         <Pagination
-          count={10}
+          count={100}
           onChange={(e, newPage) => setPage(newPage)}
           page={page}
         />

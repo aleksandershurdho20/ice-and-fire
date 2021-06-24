@@ -34,7 +34,6 @@ export default function TableBody({ characters }) {
                     "," +
                     character?.aliases.map((alias) => alias)}
                 </Grid>
-
                 <Grid item lg={3}>
                   {IsAlive(character)}
                 </Grid>
@@ -60,8 +59,9 @@ export default function TableBody({ characters }) {
                     : character?.allegiances
                         ?.toString()
                         ?.split("https://www.anapioficeandfire.com/api/houses/")
-                        .map((data) => (
+                        .map((data,index) => (
                           <a
+                             key={index}
                             className="allegiance-link"
                             onClick={() => {
                               redirectToAllegianceHouse(character, data);
